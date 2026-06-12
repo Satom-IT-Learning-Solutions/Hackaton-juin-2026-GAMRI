@@ -1,7 +1,5 @@
 # Hackaton-juin-2026
 
 
-v0.1
----
----
----
+V0.1
+--- base du design de la page
