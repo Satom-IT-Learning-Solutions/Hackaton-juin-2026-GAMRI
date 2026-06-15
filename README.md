@@ -4,7 +4,10 @@
 
 - Création de la base du design de la page
 - Définition de la direction artistique (DA) du site
+- Bouton obtenir VM et informations JSON
 - Création du logo sur Canva
+<img width="1873" height="967" alt="image" src="https://github.com/user-attachments/assets/f8dbb52b-58d6-4d5d-a1f5-e668f99df0ee" />
+<img width="1879" height="968" alt="image" src="https://github.com/user-attachments/assets/e2b3b31f-5f08-4038-9f8b-873f96ef584e" />
 
 ## V0.2
 
