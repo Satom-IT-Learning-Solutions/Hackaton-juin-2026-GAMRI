@@ -1,4 +1,6 @@
 # Hackaton Juin 2026
+Projet réalisé dans le cadre du Hackathon Juin 2026.
+L'objectif du projet est de permettre le provisionnement automatisé de machines virtuelles via une interface web simple et intuitive.
 
 ## V0.1
 
@@ -12,6 +14,18 @@
 ## V0.2
 
 - Ajout de l'interface de connexion
+- quelques modifications d'interface pour l'esthetique
 - Modifications du JavaScript et du JSON pour les tests de connexion
 - Système de connexion non fonctionnel pour le moment
 <img width="1869" height="958" alt="image" src="https://github.com/user-attachments/assets/d73a84ac-7191-48e0-9290-cbd1b28a7a02" />
+
+## À faire
+
+- Intégration de la fonction de libération des ressources ("Rendre ma VM") et de déconnexion via le logo utilisateur(a voir)
+- Gestion dynamique du DOM (affichage conditionnel des résultats, masquage du bouton d'action principal)
+- Implémentation du script de matching des credentials (simulation via base locale
+- Finaliser le système de connexion
+- Sécuriser l'authentification
+- Terraform
+- Créer le pont avec infomaniak et ajouter la création réelle des VM
+- Améliorer la gestion des erreurs
