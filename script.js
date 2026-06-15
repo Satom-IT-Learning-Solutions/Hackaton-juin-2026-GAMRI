@@ -5,10 +5,3 @@ document.querySelector('.obtenirVM').addEventListener('click', function() {
     document.getElementById('vmResult').style.display = 'block';
 });
 
-document.getElementById("rendreVM").addEventListener("click", () => {
-    document.getElementById("vmIP").textContent = "-";
-    document.getElementById("vmUser").textContent = "-";
-    document.getElementById("vmPassword").textContent = "-";
-
-    document.getElementById("vmResult").style.display = "none";
-});
