@@ -35,14 +35,21 @@ L'objectif du projet est de permettre le provisionnement automatisé de machines
 ### Interface V0.3
 <img width="800" height="450" alt="Interface V0.3 Animation" src="https://github.com/user-attachments/assets/29aa8a2c-993d-4adc-a3a2-efff547cce5e" />
 
+## V0.35
+
+- ajouts d'esthetique logo microsoft agrandi leger neon sur le logo
+- ajout de page 100% faite par ia pour placeholder des differents dashboard
+- tous les dashboard dispos sur une seule page le temps que tout soit mis en place pour les separer par compte
+- refonte totale de l'esthetique de la page dashboard 
+- aucun ajout important seulement esthetique et placeholder
+
+### Interface V0.35 (GIF de qualité moyenne car j'ai du le passer a 9fps+compresser le fichier)
+<img width="1280" height="720" alt="2026-06-1701-11-51-ezgif com-video-to-gif-converter (1)" src="https://github.com/user-attachments/assets/f9d03fcd-cb6c-4254-b54a-d45d64ae7309" />
 
 ## À faire
 
-- Intégration de la fonction de libération des ressources ("Rendre ma VM") et de déconnexion via le logo utilisateur(a voir)
-- Gestion dynamique du DOM (affichage conditionnel des résultats, masquage du bouton d'action principal)
-- Implémentation du script de matching des credentials (simulation via base locale
-- Finaliser le système de connexion
-- Sécuriser l'authentification
-- Terraform
-- Créer le pont avec infomaniak et ajouter la création réelle des VM
-- Améliorer la gestion des erreurs
+- Intégration Terraform & API Infomaniak
+- Implémentation "Rendre ma VM" (Terraform destroy)
+- Séparation stricte des rôles côté serveur (Suppression du mock JS)
+- Sécurisation de l'authentification & Route de déconnexion
+- Gestion des erreurs d'infra (Error handling API/Terraform)
