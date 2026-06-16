@@ -5,7 +5,7 @@ L'objectif du projet est de permettre le provisionnement automatisé de machines
 ## V0.1
 
 - Création de la base du design de la page
-- Définition de la direction artistique du site
+- Définition de la direction artistique (DA) du site
 - Bouton obtenir VM et informations JSON
 - Création du logo sur Canva
   
