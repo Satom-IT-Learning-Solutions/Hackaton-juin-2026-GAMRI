@@ -25,7 +25,7 @@ L'objectif du projet est de permettre le provisionnement automatisé de machines
 
 ## V0.3
 
-- Ajout et intégration complète de l'espace "Interface Étudiant" (Dashboard connecté)
+- Ajout et intégration complète de l'espace "Interface Étudiant" 
 - Implémentation du protocole de connexion Microsoft OAuth (Authlib)
 - Intégration d'un système de Mock sécurisé via base SQLite locale pour valider les rôles (Élève, Prof, Admin) en attendant les IDs Azure de production
 - Sécurisation du code externalisation des credentials sensibles (clés privées, variables d'environnement) via un système "python-dotenv" (Git-safe)
