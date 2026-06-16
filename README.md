@@ -5,7 +5,7 @@ L'objectif du projet est de permettre le provisionnement automatisé de machines
 ## V0.1
 
 - Création de la base du design de la page
-- Définition de la direction artistique (DA) du site
+- Définition de la direction artistique du site
 - Bouton obtenir VM et informations JSON
 - Création du logo sur Canva
   
@@ -25,13 +25,14 @@ L'objectif du projet est de permettre le provisionnement automatisé de machines
 
 ## V0.3
 
-- Ajout et intégration complète de l'espace "Interface Étudiant" 
-- Implémentation du protocole de connexion Microsoft OAuth (Authlib)
-- Intégration d'un système de Mock sécurisé via base SQLite locale pour valider les rôles (Élève, Prof, Admin) en attendant les IDs Azure de production
-- Sécurisation du code externalisation des credentials sensibles (clés privées, variables d'environnement) via un système "python-dotenv" (Git-safe)
-- Ajout du logo Microsoft sur le bouton de connexion
-- Réaménagement global et refactoring du fichier "app.py"
-  
+* Ajout et intégration complète de l'espace **Interface Étudiant**.
+* Implémentation de l'authentification Microsoft via le protocole **OAuth 2.0** avec **Authlib**.
+* Mise en place d'un système de **mock sécurisé** basé sur une base de données **SQLite locale** permettant la validation des rôles (*Élève, Professeur, Administrateur*) en attendant l'intégration des identifiants Azure de production.
+* Migration du pseudo-backend JavaScript vers un véritable backend **Python**.
+* Renforcement de la sécurité du projet avec l'externalisation des informations sensibles (clés privées, variables d'environnement, secrets applicatifs) via **python-dotenv** et un stockage compatible Git (*Git-safe*).
+* Ajout du logo Microsoft sur le bouton de connexion.
+* Réorganisation générale et refactorisation du fichier "app.py".
+
 ### Interface V0.3
 <img width="800" height="450" alt="Interface V0.3 Animation" src="https://github.com/user-attachments/assets/29aa8a2c-993d-4adc-a3a2-efff547cce5e" />
 
