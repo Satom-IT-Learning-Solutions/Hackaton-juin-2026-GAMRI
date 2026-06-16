@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Étudiant</title>
+    <link rel="stylesheet" href="/style2.css">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div>
+            <div class="brand">
+                <img src="/images/Logo.png" alt="Cube Logo">
+                <span>GIT CLOUD</span>
+            </div>
+            <nav class="menu">
+                <a href="#" class="menu-item active">Dashboard</a>
+                <a href="#" class="menu-item">Mes Instances VM</a>
+                <a href="#" class="menu-item">Templates</a>
+            </nav>
+        </div>
+
+        <div class="user-profile">
+            <div class="user-name">{{ nom if nom else "Utilisateur" }}</div>
+            <div class="user-role">Élève</div>
+        </div>
+    </aside>
+
+    <main class="main-content">
+        <header class="header">
+            <div class="header-title">
+                <h1>Espace Étudiant</h1>
+                <p>Gestion et déploiement de ton infrastructure de lab.</p>
+            </div>
+            <div class="header-email">
+                {{ email if email else "non-connecté@git.swiss" }}
+            </div>
+        </header>
+
+        <section class="grid">
+            <div class="card">
+                <h3>Déployer un environnement</h3>
+                <p>Génère instantanément une machine virtuelle Windows Server ou Linux préconfigurée pour tes TP.</p>
+                <button class="btn">Nouvelle VM</button>
+            </div>
+
+            <div class="card">
+                <h3>Ressources allouées</h3>
+                <p>Quota actuel du Hackathon :<br>• vCPU: 0 / 4<br>• RAM: 0 / 8 Go<br>• Stockage: 0 / 80 Go</p>
+                <button class="btn btn-secondary">Voir les détails</button>
+            </div>
+        </section>
+    </main>
+
+</body>
+</html>

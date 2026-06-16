@@ -8,7 +8,6 @@ body {
     font-family: 'JetBrains Mono', sans-serif;
 }
 
-
 .hero {
     position: absolute;
     top: 0;
@@ -37,20 +36,20 @@ body {
     opacity: 0.4; 
 }
 
-    .provisionningVM {
-        position: absolute;
-        top: 5vh; 
-        left: 0;
-        width: 100%;
-        z-index: 3; 
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start; 
-        box-sizing: border-box;
-        padding: 20px;
-        height: auto; 
-    }
+.provisionningVM {
+    position: absolute;
+    top: 5vh; 
+    left: 0;
+    width: 100%;
+    z-index: 3; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; 
+    box-sizing: border-box;
+    padding: 20px;
+    height: auto; 
+}
 
 .image {
     width: 200px;
@@ -66,7 +65,6 @@ body h1 {
     font-size: 50px;
     margin: 10px 0 20px 0; 
 }
-
 
 .obtenirVM {
     padding: 15px 30px;
@@ -87,56 +85,65 @@ body h1 {
     bottom: 0;
     margin-top: 35px;
     opacity: 0.45;
-    background-color: none;
+    background-color: transparent;
     color: #717881;
     font-size: 14px;
 }
 
-.Login {
+.connexion-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px; 
     padding: 10px 20px;
-    width: 250px;
+    min-width: 250px;
     color: rgb(255, 255, 255);
-    background-color: rgb(63, 71, 82);
+    background-color: rgb(28, 43, 65);
     font-size: 20px; 
     font-family: inherit, sans-serif;
+    text-decoration: none;
     border: none;
-    display: block;
+    cursor: pointer;
     margin-top: 20px;
     opacity: 0.8;
+    transition: background-color 0.2s ease, opacity 0.2s ease;
 }
-.Login:hover {
+
+.microsoft-logo {
+    width: 24px; 
+    height: 24px;
+    object-fit: contain; 
+}
+
+.connexion-button:hover {
     background-color: rgb(80, 90, 100);
     opacity: 1;
 }
 
-.connexion-button{
-    padding: 10px 20px;
-    display: block;
-    margin: 20px auto 0 auto;
-    color: rgba(255, 255, 255, 0.6);
-    background-color: rgb(63, 71, 82);
-    font-size: 20px; 
+.vm-info {
+    padding: 10px 30px;
+    color: rgb(255, 255, 255);
+    font-size: 15px; 
     font-family: inherit, sans-serif;
+    cursor: pointer;
     border: none;
-    margin-top: 20px;
-    opacity: 0.8;
+    transition: transform 0.2s ease;
+    margin-top: 0; 
 }
 
-button {
-    padding: 10px 20px;
-    color: rgb(255, 255, 255);
-    background-color: rgb(63, 71, 82);
-    font-size: 20px; 
-    font-family: inherit; 
-    border: none;
-    cursor: pointer; 
-    margin-top: 20px;
-    opacity: 0.8;
-}
-button:hover {
-    background-color: rgb(80, 90, 100);
-    opacity: 1;
-}
+.Microsoft {
+        padding: 10px 30px;
+        color: rgb(0, 0, 0);
+        outline: rgba(4, 14, 59, 0.534) solid 2px;
+        background-color: rgb(67, 78, 92);
+        font-size: 15px; 
+        font-family: inherit, sans-serif;
+        cursor: pointer;
+        border: none;
+        transition: transform 0.2s ease;
+        margin-top: 0; 
+    }
+
 
 .connexion {
     padding: 15px 30px;
@@ -158,32 +165,3 @@ button:hover {
     transition: transform 0.2s ease;
     margin-top: 0; 
 }
-
-/*button:active {
- box-shadow: none;
-}
-Source: https://uiverse.io/barisdogansutcu/black-duck-67
-button {
- display: flex;
- align-items: center;
- justify-content: center;
- gap: 10px;
- font-family: inherit;
- font-size: 13px;
- font-weight: 500;
- letter-spacing: 0.4px;
- color: #000000;
- background-color: #8b8e91;
- border-style: solid;
- border-width: 2px 2px 2px 2px;
- border-color: rgba(255, 255, 255, 0.333);
- padding: 16px 24px 16px 28px;
- transform: translate(0px, 0px) rotate(0deg);
- transition: 0.2s;
- box-shadow: -4px -2px 450px 0px #061081c2, 4px 2px 16px 0px rgb(95 157 231 / 48%);
-}
-button:hover {
- color: #516d91;
- background-color: #E5EDF5;
- box-shadow: -2px -1px 8px 0px #ffffff, 2px 1px 8px 0px rgb(95 157 231 / 48%);
-}*/
