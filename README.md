@@ -1,56 +1,157 @@
-# Hackaton Juin 2026
-Projet réalisé dans le cadre du Hackathon Juin 2026.
-L'objectif du projet est de permettre le provisionnement automatisé de machines virtuelles via une interface web simple et intuitive.
+# Hackathon Juin 2026
+
+> **Projet en cours de développement**
+>
+> Les captures d'écran et fonctionnalités présentées dans ce dépôt correspondent à l'état du projet au moment de chaque version et sont susceptibles d'évoluer.
+
+## Présentation
+
+Ce projet a été réalisé dans le cadre du **Hackathon Juin 2026**.
+
+L'objectif est de permettre le **provisionnement automatisé de machines virtuelles** via une interface web moderne, simple et intuitive. À terme, les utilisateurs pourront créer, gérer et supprimer leurs machines virtuelles directement depuis une plateforme centralisée, avec une authentification Microsoft et une gestion des rôles adaptée aux différents profils.
+
+## Équipe
+
+**Chef d'équipe**
+
+* Gabryel Dwarka
+
+**Membres**
+
+* Romaun Jaquet
+* Ilyess Curschellas
+* Arif Jibril
+* Marcus Molnar
+
+---
+
+# Historique des versions
 
 ## V0.1
 
-- Création de la base du design de la page
-- Définition de la direction artistique du site
-- Bouton obtenir VM et informations JSON
-- Création du logo sur Canva
-  
-## Interface V0.1
-<img width="1873" height="967" alt="image" src="https://github.com/user-attachments/assets/f8dbb52b-58d6-4d5d-a1f5-e668f99df0ee" />
-<img width="1879" height="968" alt="image" src="https://github.com/user-attachments/assets/e2b3b31f-5f08-4038-9f8b-873f96ef584e" />
+### Fonctionnalités
+
+* Création de la structure initiale du projet.
+* Conception de la première interface utilisateur.
+* Définition de la direction artistique du site.
+* Mise en place du bouton **« Obtenir une VM »**.
+* Affichage des informations au format JSON.
+* Création du logo du projet avec Canva.
+
+### Interface V0.1
+
+<img width="1873" height="967" alt="Interface V0.1" src="https://github.com/user-attachments/assets/f8dbb52b-58d6-4d5d-a1f5-e668f99df0ee" />
+
+<img width="1879" height="968" alt="Interface V0.1" src="https://github.com/user-attachments/assets/e2b3b31f-5f08-4038-9f8b-873f96ef584e" />
+
+---
 
 ## V0.2
 
-- Ajout de l'interface de connexion
-- quelques modifications d'interface pour l'esthetique
-- Modifications du JavaScript et du JSON pour les tests de connexion
-- Système de connexion non fonctionnel pour le moment
-  
-## Interface V0.2
-<img width="1869" height="958" alt="image" src="https://github.com/user-attachments/assets/d73a84ac-7191-48e0-9290-cbd1b28a7a02" />
+### Fonctionnalités
+
+* Ajout de l'interface de connexion.
+* Améliorations visuelles et ajustements de l'interface.
+* Modifications du JavaScript et des données JSON pour les premiers tests de connexion.
+* Préparation du futur système d'authentification.
+
+### Limitations
+
+* Le système de connexion n'est pas encore fonctionnel.
+
+### Interface V0.2
+
+<img width="1869" height="958" alt="Interface V0.2" src="https://github.com/user-attachments/assets/d73a84ac-7191-48e0-9290-cbd1b28a7a02" />
+
+---
 
 ## V0.3
 
-* Ajout et intégration complète de l'espace **Interface Étudiant**.
-* Implémentation de l'authentification Microsoft via le protocole **OAuth 2.0** avec **Authlib**.
-* Mise en place d'un système de **mock sécurisé** basé sur une base de données **SQLite locale** permettant la validation des rôles (*Élève, Professeur, Administrateur*) en attendant l'intégration des identifiants Azure de production.
-* Migration du pseudo-backend JavaScript vers un véritable backend **Python**.
-* Renforcement de la sécurité du projet avec l'externalisation des informations sensibles (clés privées, variables d'environnement, secrets applicatifs) via **python-dotenv** et un stockage compatible Git (*Git-safe*).
+### Fonctionnalités
+
+* Ajout et intégration complète de l'**Interface Étudiant**.
+* Implémentation de l'authentification Microsoft via **OAuth 2.0** avec **Authlib**.
+* Mise en place d'un système de **mock sécurisé** basé sur SQLite pour la gestion des rôles :
+
+  * Élève
+  * Professeur
+  * Administrateur
+* Migration du pseudo-backend JavaScript vers un véritable backend Python.
+* Sécurisation du projet grâce à l'externalisation des secrets applicatifs via **python-dotenv**.
 * Ajout du logo Microsoft sur le bouton de connexion.
-* Réorganisation générale et refactorisation du fichier "app.py".
+* Refactorisation et réorganisation du fichier `app.py`.
 
 ### Interface V0.3
-<img width="800" height="450" alt="Interface V0.3 Animation" src="https://github.com/user-attachments/assets/29aa8a2c-993d-4adc-a3a2-efff547cce5e" />
+
+<img width="800" height="450" alt="Interface V0.3" src="https://github.com/user-attachments/assets/29aa8a2c-993d-4adc-a3a2-efff547cce5e" />
+
+---
 
 ## V0.35
 
-- ajouts d'esthetique logo microsoft agrandi leger neon sur le logo
-- ajout de page 100% faite par ia pour placeholder des differents dashboard
-- tous les dashboard dispos sur une seule page le temps que tout soit mis en place pour les separer par compte
-- refonte totale de l'esthetique de la page dashboard 
-- aucun ajout important seulement esthetique et placeholder
+### Fonctionnalités
 
-### Interface V0.35 (GIF de qualité moyenne car j'ai du le passer a 9fps+compresser le fichier)
-<img width="1280" height="720" alt="2026-06-1701-11-51-ezgif com-video-to-gif-converter (1)" src="https://github.com/user-attachments/assets/f9d03fcd-cb6c-4254-b54a-d45d64ae7309" />
+* Amélioration visuelle du svg Microsoft
+* Léger effet néon sur le logo du site
+* Création de pages de démonstration servant de placeholders pour les futurs tableaux de bord.
+* Suppression du dossier `style2` afin de simplifier l'architecture du projet.
+* Regroupement temporaire de tous les tableaux de bord dans `dashboard_etudiant.html`.
+* Refonte complète de l'esthétique du tableau de bord.
+* Préparation de la future séparation des espaces utilisateurs selon leur rôle.
 
-## À faire
+### Notes
 
-- Intégration Terraform & API Infomaniak
-- Implémentation "Rendre ma VM" (Terraform destroy)
-- Séparation stricte des rôles côté serveur (Suppression du mock JS)
-- Sécurisation de l'authentification & Route de déconnexion
-- Gestion des erreurs d'infra (Error handling API/Terraform)
+Cette version est principalement orientée vers l'amélioration visuelle du projet et la préparation des futures fonctionnalités.
+
+### Interface V0.35
+
+*GIF compressé et limité à 9 FPS afin de réduire sa taille.*
+
+<img width="1280" height="720" alt="Interface V0.35" src="https://github.com/user-attachments/assets/f9d03fcd-cb6c-4254-b54a-d45d64ae7309" />
+
+---
+
+# Technologies utilisées
+
+* Python
+* Flask
+* Authlib
+* SQLite
+* HTML5
+* CSS3
+* JavaScript
+* Microsoft OAuth 2.0
+* python-dotenv
+
+---
+
+# Roadmap
+
+## Priorité haute
+
+* Intégration de Terraform.
+* Intégration de l'API Infomaniak.
+* Implémentation de la fonctionnalité **« Rendre ma VM »** (*Terraform Destroy*).
+* Séparation stricte des rôles côté serveur.
+* Suppression définitive du système de mock.
+
+## Priorité moyenne
+
+* Mise en place d'une route de déconnexion sécurisée.
+* Renforcement de la sécurité globale de l'authentification.
+* Gestion des erreurs Terraform et API.
+* Journalisation des événements critiques.
+
+## Priorité basse
+
+* Optimisations de l'interface utilisateur.
+* Améliorations visuelles supplémentaires.
+* Ajout d'indicateurs de progression et de suivi des opérations.
+
+---
+
+# État du projet
+
+Développement actif
+
+Le projet est actuellement en phase de développement et de validation des fonctionnalités principales. Les prochaines étapes concernent l'automatisation complète du provisionnement des machines virtuelles et la mise en place des rôles utilisateurs définitifs.
