@@ -23,7 +23,6 @@ L'objectif est de permettre le **provisionnement automatisé de machines virtuel
 * Arif Jibril
 * Marcus Molnar
 
----
 
 # Historique des versions
 
@@ -44,7 +43,6 @@ L'objectif est de permettre le **provisionnement automatisé de machines virtuel
 
 <img width="1879" height="968" alt="Interface V0.1" src="https://github.com/user-attachments/assets/e2b3b31f-5f08-4038-9f8b-873f96ef584e" />
 
----
 
 ## V0.2
 
@@ -63,7 +61,6 @@ L'objectif est de permettre le **provisionnement automatisé de machines virtuel
 
 <img width="1869" height="958" alt="Interface V0.2" src="https://github.com/user-attachments/assets/d73a84ac-7191-48e0-9290-cbd1b28a7a02" />
 
----
 
 ## V0.3
 
@@ -85,7 +82,6 @@ L'objectif est de permettre le **provisionnement automatisé de machines virtuel
 
 <img width="800" height="450" alt="Interface V0.3" src="https://github.com/user-attachments/assets/29aa8a2c-993d-4adc-a3a2-efff547cce5e" />
 
----
 
 ## V0.35
 
@@ -109,7 +105,6 @@ Cette version est principalement orientée vers l'amélioration visuelle du proj
 
 <img width="1280" height="720" alt="Interface V0.35" src="https://github.com/user-attachments/assets/f9d03fcd-cb6c-4254-b54a-d45d64ae7309" />
 
----
 
 # Technologies utilisées
 
@@ -123,7 +118,6 @@ Cette version est principalement orientée vers l'amélioration visuelle du proj
 * Microsoft OAuth 2.0
 * python-dotenv
 
----
 
 # Roadmap
 
@@ -148,7 +142,6 @@ Cette version est principalement orientée vers l'amélioration visuelle du proj
 * Améliorations visuelles supplémentaires.
 * Ajout d'indicateurs de progression et de suivi des opérations.
 
----
 
 # État du projet
 
