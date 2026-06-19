@@ -105,6 +105,13 @@ Cette version est principalement orientée vers l'amélioration visuelle du proj
 
 <img width="1280" height="720" alt="Interface V0.35" src="https://github.com/user-attachments/assets/f9d03fcd-cb6c-4254-b54a-d45d64ae7309" />
 
+## V0.4
+
+### Fonctionnalités
+
+* Ajout d'un .env pour sécuriser nos variables et nos données sensibles comme les identifiants pour la connexion
+* Ajout d'un workflow en phase de test servant à envoyer un mail à la personne qui accepte ou non la demande de VM et un autre pour recevoir le choix de la personne qui accepte ou non la demande
+* Ajout d'un formulaire pour initialiser la demande de VM
 
 # Technologies utilisées
 
