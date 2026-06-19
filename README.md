@@ -18,7 +18,7 @@ L'objectif est de permettre le **provisionnement automatisé de machines virtuel
 
 **Membres**
 
-* Romain Jaquet
+* Romaun Jaquet
 * Ilyess Curschellas
 * Arif Jibril
 * Marcus Molnar

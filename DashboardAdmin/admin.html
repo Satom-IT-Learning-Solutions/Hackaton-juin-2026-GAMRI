@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GIT Cloud — Espace Admin</title>
+    <link rel="stylesheet" href="style_admin.css">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-top">
+            <a href="/" class="brand">
+                <img src="/images/Logo.png" alt="GIT Cloud">
+                <span>GIT CLOUD</span>
+            </a>
+            <nav class="menu">
+                <a href="#" class="menu-item active" data-section="dashboard">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+                    Supervision
+                </a>
+                <a href="#" class="menu-item" data-section="utilisateurs">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    Utilisateurs
+                </a>
+                <a href="#" class="menu-item" data-section="templates">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"/><rect x="2" y="14" width="20" height="8" rx="2" ry="2"/><line x1="6" y1="6" x2="6.01" y2="6"/><line x1="6" y1="18" x2="6.01" y2="18"/></svg>
+                    Templates VM
+                </a>
+            </nav>
+        </div>
+        <div class="user-profile">
+            <div class="user-avatar">{{ nom[0] if nom else 'A' }}</div>
+            <div class="user-info">
+                <div class="user-name">{{ nom }}</div>
+                <div class="user-role">Administrateur</div>
+            </div>
+            <a href="/logout" class="logout-btn" title="Déconnexion">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            </a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+
+        <section id="section-dashboard" class="page-section active">
+            <header class="page-header">
+                <div>
+                    <h1>Console d'Administration</h1>
+                    <p>Vue d'ensemble de l'infrastructure GIT Cloud</p>
+                </div>
+            </header>
+
+            <div class="stats-row">
+                <div class="stat-card accent-red">
+                    <div class="stat-value" id="global-vms">—</div>
+                    <div class="stat-label">VMs Actives sur le Cluster</div>
+                </div>
+                <div class="stat-card accent-blue">
+                    <div class="stat-value" id="global-users">—</div>
+                    <div class="stat-label">Utilisateurs Enregistrés</div>
+                </div>
+                <div class="stat-card accent-green">
+                    <div class="stat-value" id="global-ratio">—</div>
+                    <div class="stat-label">Taux d'Approbation</div>
+                </div>
+            </div>
+
+            <div class="section-title">Dernières requêtes d'infrastructure globales</div>
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Demandeur</th>
+                            <th>Configuration</th>
+                            <th>Période</th>
+                            <th>Statut</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-global-vms">
+                        <tr><td colspan="4" class="empty-row">Chargement de la télémétrie...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="section-utilisateurs" class="page-section">
+            <header class="page-header">
+                <div>
+                    <h1>Gestion des Comptes</h1>
+                    <p>Contrôle des accès et attribution des rôles applicatifs</p>
+                </div>
+            </header>
+
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Nom</th>
+                            <th>Email</th>
+                            <th>Rôle Actuel</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-users">
+                        <tr><td colspan="4" class="empty-row">Chargement de l'annuaire...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="section-templates" class="page-section">
+            <header class="page-header">
+                <div>
+                    <h1>Templates matériels</h1>
+                    <p>Gestion des gabarits de machines virtuelles disponibles</p>
+                </div>
+            </header>
+
+            <div class="templates-list-grid" id="admin-templates-grid">
+                </div>
+        </section>
+
+    </main>
+
+    <script src="script_admin.js"></script>
+</body>
+</html>

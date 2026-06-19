@@ -1,59 +1,85 @@
+# On importe tous les modules nécessaires
+import os
+from dotenv import load_dotenv
 from flask import Flask, redirect, url_for, session, render_template
 import sqlite3
-import mimetypes
+from authlib.integrations.flask_client import OAuth
 
-# Fix Windows pour le chargement du CSS/JS
-mimetypes.add_type('text/css', '.css')
-mimetypes.add_type('application/javascript', '.js')
+# On charge le fichier .env
+load_dotenv()
 
+# On dit à Flask que le dossier des templates et le dossier static, c'est la racine '.'
 app = Flask(__name__, template_folder='.', static_folder='.', static_url_path='')
-app.secret_key = "65161064539865410321"
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY') # On récupère notre clé secrète du fichier .env
+oauth = OAuth(app) # On initialise l'authentification
+
+# On récupère toutes nos variables cachées
+CLIENT_ID = os.environ.get('CLIENT_ID')
+CLIENT_SECRET = os.environ.get('CLIENT_SECRET')
+SERVER_METADATA_URL= os.environ.get('SERVER_METADATA_URL')
+
+oauth.register(name='azure',client_id=CLIENT_ID,client_secret=CLIENT_SECRET,server_metadata_url=SERVER_METADATA_URL,client_kwargs={'scope':'openid profile email'})
+
+def init_db():
+    conn = sqlite3.connect("base_test.db") # Ouvre le fichier ou le créé si il n'existe pas
+
+    cursor = conn.cursor() # Curseur pour exécuter les requêtes SQL
+
+    cursor.execute("CREATE TABLE IF NOT EXISTS utilisateurs(id INTEGER PRIMARY KEY, email TEXT, nom TEXT, role TEXT)")
+
+    # On va se connecter avec l'adresse email marcus.molnar-jensen@git.swiss pour la base de données
+    cursor.execute("INSERT OR IGNORE INTO utilisateurs (email, nom, role) VALUES ('marcus.molnar-jensen@git.swiss', 'Marcus', 'Etudiant')")
+
+    conn.commit() # Enregistre les modifications
+
+    conn.close() # Ferme tout
+
 
 @app.route('/')
+
 def home():
-    return render_template('Index.html')
+    return render_template('index.html') # Affiche la page web
 
-# ROUTE LOGIN MODIFIÉE : On simule Azure en local
 @app.route('/login')
+
 def login():
-    # ICI : Mets le mail de la BDD que tu veux tester
-    # 'marcus.molnar-jensen@git.swiss' ou un prof/admin de ta base
-    email = "marcus.molnar-jensen@git.swiss" 
+    redirect_uri = url_for('auth_callback', _external=True)
+    return oauth.azure.authorize_redirect(redirect_uri, prompt='login')
 
-    conn = sqlite3.connect("base_test.db") 
+@app.route('/logout')
+def logout():
+    session.clear() # Efface les données de l'étudiant (email, nom, role)
+    return redirect(url_for('home'))
+
+@app.route('/callback')
+
+def auth_callback():
+    token = oauth.azure.authorize_access_token()
+
+    # On extrait les infos de l'utilisateur
+    user_info = token.get('userinfo')
+    email = user_info['email']
+    nom = user_info['name']
+
+    # On ouvre la base de données
+    conn = sqlite3.connect("base_test.db")
     cursor = conn.cursor()
-    role = None
-    nom = "Utilisateur"
 
-    # 1. Check Élève
-    cursor.execute("SELECT nom FROM eleve WHERE email = ?", (email,))
-    user = cursor.fetchone()
-    if user:
-        role = 'Etudiant'
-        nom = user[0]
-    else:
-        # 2. Check Prof
-        cursor.execute("SELECT nom FROM Prof WHERE email = ?", (email,))
-        user = cursor.fetchone()
-        if user:
-            role = 'Formateur'
-            nom = user[0]
-        else:
-            # 3. Check Admin
-            cursor.execute("SELECT nom FROM Administrateur WHERE email = ?", (email,))
-            user = cursor.fetchone()
-            if user:
-                role = 'Admin'
-                nom = user[0]
-
+    # On recherche l'utilisateur
+    cursor.execute("SELECT role FROM utilisateurs WHERE email = ?", (email,))
+    resultat = cursor.fetchone()
     conn.close()
 
-    if role:
-        # On remplit la session manuellement comme si Microsoft l'avait fait
+    # On vérifie si l'utilisateur existe dans la base de données
+    if resultat:
+        role = resultat[0]
+
+        # On récupère les infos
         session['email'] = email
         session['nom'] = nom
         session['role'] = role
 
+        # On redirige au bon endroit selon le rôle
         if role == 'Etudiant':
             return redirect(url_for('dashboard_etudiant'))
         elif role == 'Formateur':
@@ -61,25 +87,30 @@ def login():
         elif role == 'Admin':
             return redirect(url_for('dashboard_admin'))
     else:
-        return f"Accès refusé. L'adresse {email} n'est pas dans la base.", 403
+        # Si l'utilisateur n'existe pas dans notre base de données
+        return "Accès refusé, vous n'êtes pas inscrit", 403
 
 @app.route('/dashboard/etudiant')
+
 def dashboard_etudiant():
     if 'role' not in session or session['role'] != 'Etudiant':
         return "Accès interdit", 403
-    return render_template('dashboard_etudiant.html', nom=session.get('nom'), email=session.get('email'))
+    return render_template('DashboardEtudiant/etudiant.html', nom=session.get('nom'), email=session.get('email'), role=session.get('role'))
 
 @app.route('/dashboard/formateur')
+
 def dashboard_formateur():
     if 'role' not in session or session['role'] != 'Formateur':
         return "Accès interdit", 403
-    return "<h1>Espace Formateur</h1><p>Placeholder</p>"
+    return render_template('DashboardFormateur/formateur.html', nom=session.get('nom'), email=session.get('email'), role=session.get('role'))
 
 @app.route('/dashboard/admin')
+
 def dashboard_admin():
     if 'role' not in session or session['role'] != 'Admin':
         return "Accès interdit", 403
-    return "<h1>Espace Admin</h1><p>Placeholder</p>"
+    return render_template('DashboardAdmin/admin.html', nom=session.get('nom'), email=session.get('email'), role=session.get('role'))
 
 if __name__ == '__main__':
+    init_db()
     app.run(debug=True, port=8000)

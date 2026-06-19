@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GIT Cloud — Espace Formateur</title>
+    <link rel="stylesheet" href="style_formateur.css">
+</head>
+<body>
+
+    <aside class="sidebar">
+        <div class="sidebar-top">
+            <a href="/" class="brand">
+                <img src="/images/Logo.png" alt="GIT Cloud">
+                <span>GIT CLOUD</span>
+            </a>
+            <nav class="menu">
+                <a href="#" class="menu-item active" data-section="validations">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                    Validations VM
+                </a>
+                <a href="#" class="menu-item" data-section="demandes-groupes">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                    Demande Groupée
+                </a>
+            </nav>
+        </div>
+        <div class="user-profile">
+            <div class="user-avatar">{{ nom[0] if nom else 'F' }}</div>
+            <div class="user-info">
+                <div class="user-name">{{ nom }}</div>
+                <div class="user-role">Formateur</div>
+            </div>
+            <a href="/logout" class="logout-btn" title="Déconnexion">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+            </a>
+        </div>
+    </aside>
+
+    <main class="main-content">
+
+        <section id="section-validations" class="page-section active">
+            <header class="page-header">
+                <div>
+                    <h1>Flux d'approbations</h1>
+                    <p>Validez ou rejetez les demandes de ressources des étudiants</p>
+                </div>
+            </header>
+
+            <div class="section-title">Requêtes en attente de traitement</div>
+            <div class="table-container">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Étudiant</th>
+                            <th>Template Requis</th>
+                            <th>Justification / Cours</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tbody-pending">
+                        <tr><td colspan="4" class="empty-row">Aucun flux en attente de signature.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <section id="section-demandes-groupes" class="page-section">
+            <header class="page-header">
+                <div>
+                    <h1>Batch Provisioning</h1>
+                    <p>Générez un quota d'instances massif pour un TP ou un examen spécifique</p>
+                </div>
+            </header>
+
+            <div class="form-grid">
+                <div class="form-group">
+                    <label>Gabarit d'infrastructure</label>
+                    <div class="templates-compact-grid" id="compact-templates">
+                        </div>
+                </div>
+
+                <div class="form-inputs-row">
+                    <div class="form-group">
+                        <label for="g-nb">Nombre d'instances à générer</label>
+                        <input type="number" id="g-nb" min="1" max="30" placeholder="Ex: 15" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="g-cours">Identifiant du cours / Module</label>
+                        <input type="text" id="g-cours" placeholder="Ex: TP-ADMIN-SERVER" required>
+                    </div>
+                </div>
+
+                <div class="form-inputs-row">
+                    <div class="form-group">
+                        <label for="g-debut">Date d'activation</label>
+                        <input type="datetime-local" id="g-debut" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="g-fin">Date de destruction automatique</label>
+                        <input type="datetime-local" id="g-fin" required>
+                    </div>
+                </div>
+
+                <button class="btn-submit-group" id="btn-groupe" disabled>Valider la demande groupée</button>
+                <div id="g-message" class="form-message" style="display: none;"></div>
+            </div>
+        </section>
+
+    </main>
+
+    <script src="script_formateur.js"></script>
+</body>
+</html>

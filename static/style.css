@@ -1,0 +1,189 @@
+body {
+    background-color: #0B0F19; 
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    position: relative;
+    overflow-x: hidden;
+    font-family: 'JetBrains Mono', sans-serif;
+}
+
+
+.hero {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60vh; 
+    z-index: 1;
+    pointer-events: none; 
+}
+
+.hero::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%; 
+    background: linear-gradient(to bottom, rgba(11, 15, 25, 0) 0%, #0B0F19 100%);
+    z-index: 2;
+}
+
+.sky {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.4; 
+}
+
+    .provisionningVM {
+        position: absolute;
+        top: 5vh; 
+        left: 0;
+        width: 100%;
+        z-index: 3; 
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start; 
+        box-sizing: border-box;
+        padding: 20px;
+        height: auto; 
+    }
+
+.image {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    margin-bottom: 150px; 
+    filter: brightness(0) invert(1);
+}
+
+body h1 {
+    text-align: center;
+    color: #ffffff;
+    font-size: 50px;
+    margin: 10px 0 20px 0; 
+}
+
+
+.obtenirVM {
+    padding: 15px 30px;
+    color: rgb(0, 0, 0);
+    font-size: 35px; 
+    font-family: inherit, sans-serif;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.2s ease;
+    margin-top: 0; 
+}
+
+.obtenirVM:hover {
+    transform: scale(1.05); 
+}
+
+.footer {
+    bottom: 0;
+    margin-top: 35px;
+    opacity: 0.45;
+    background-color: none;
+    color: #717881;
+    font-size: 14px;
+}
+
+.Login {
+    padding: 10px 20px;
+    width: 250px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(63, 71, 82);
+    font-size: 20px; 
+    font-family: inherit, sans-serif;
+    border: none;
+    display: block;
+    margin-top: 20px;
+    opacity: 0.8;
+}
+.Login:hover {
+    background-color: rgb(80, 90, 100);
+    opacity: 1;
+}
+
+.connexion-button{
+    padding: 10px 20px;
+    display: block;
+    margin: 20px auto 0 auto;
+    color: rgba(255, 255, 255, 0.6);
+    background-color: rgb(63, 71, 82);
+    font-size: 20px; 
+    font-family: inherit, sans-serif;
+    border: none;
+    margin-top: 20px;
+    opacity: 0.8;
+}
+
+button {
+    padding: 10px 20px;
+    color: rgb(255, 255, 255);
+    background-color: rgb(63, 71, 82);
+    font-size: 20px; 
+    font-family: inherit; 
+    border: none;
+    cursor: pointer; 
+    margin-top: 20px;
+    opacity: 0.8;
+}
+button:hover {
+    background-color: rgb(80, 90, 100);
+    opacity: 1;
+}
+
+.connexion {
+    padding: 15px 30px;
+    color: rgb(253, 253, 253);
+    font-size: 35px; 
+    font-family: inherit, sans-serif;
+    border: none;
+    margin-top: 20px; 
+    opacity: 0.8;
+}
+
+.vm-info{
+    padding: 10px 30px;
+    color: rgb(255, 255, 255);
+    font-size: 15px; 
+    font-family: inherit, sans-serif;
+    cursor: pointer;
+    border: none;
+    transition: transform 0.2s ease;
+    margin-top: 0; 
+}
+
+/*button:active {
+ box-shadow: none;
+}
+Source: https://uiverse.io/barisdogansutcu/black-duck-67
+button {
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ gap: 10px;
+ font-family: inherit;
+ font-size: 13px;
+ font-weight: 500;
+ letter-spacing: 0.4px;
+ color: #000000;
+ background-color: #8b8e91;
+ border-style: solid;
+ border-width: 2px 2px 2px 2px;
+ border-color: rgba(255, 255, 255, 0.333);
+ padding: 16px 24px 16px 28px;
+ transform: translate(0px, 0px) rotate(0deg);
+ transition: 0.2s;
+ box-shadow: -4px -2px 450px 0px #061081c2, 4px 2px 16px 0px rgb(95 157 231 / 48%);
+}
+button:hover {
+ color: #516d91;
+ background-color: #E5EDF5;
+ box-shadow: -2px -1px 8px 0px #ffffff, 2px 1px 8px 0px rgb(95 157 231 / 48%);
+}*/
