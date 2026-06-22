@@ -52,7 +52,7 @@ def logout():
     session.clear() # Efface les données de l'étudiant (email, nom, role)
     return redirect(url_for('home'))
 
-@app.route('https://hackaton-provisionningvm-juin-2026.onrender.com/callback')
+@app.route('/callback')
 
 def auth_callback():
     token = oauth.azure.authorize_access_token()
