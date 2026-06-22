@@ -1,5 +1,6 @@
 # On importe tous les modules nécessaires
 import os
+import requests
 from dotenv import load_dotenv
 from flask import Flask, redirect, url_for, session, render_template
 import sqlite3
@@ -51,7 +52,7 @@ def logout():
     session.clear() # Efface les données de l'étudiant (email, nom, role)
     return redirect(url_for('home'))
 
-@app.route('/callback')
+@app.route('https://hackaton-provisionningvm-juin-2026.onrender.com/callback')
 
 def auth_callback():
     token = oauth.azure.authorize_access_token()
@@ -111,6 +112,26 @@ def dashboard_admin():
         return "Accès interdit", 403
     return render_template('DashboardAdmin/admin.html', nom=session.get('nom'), email=session.get('email'), role=session.get('role'))
 
+import requests # N'oublie pas l'import tout en haut
+
+@app.route('/api/envoyer-zapier', methods=['POST'])
+def envoyer_zapier():
+    from flask import request, jsonify
+    
+    # On récupère l'URL cachée dans le fichier .env (ou variables.env selon ton choix)
+    zapier_url = os.environ.get('ZAPIER_WEBHOOK_URL') 
+    
+    # On prend les données (événement, statut, date) envoyées par ton JS
+    donnees_recues = request.json 
+    
+    try:
+        # Flask fait l'envoi secret à Zapier
+        requests.post(zapier_url, json=donnees_recues, timeout=5)
+        return jsonify({"statut": "success"}), 200
+    except:
+        return jsonify({"statut": "erreur"}), 500
+    
+    
 if __name__ == '__main__':
     init_db()
     app.run(debug=True, port=8000)
