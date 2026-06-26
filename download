@@ -1,25 +1,6 @@
-﻿# ================================
-# FICHIERS SECRETS — JAMAIS SUR GITHUB
-# ================================
-
-# Clés SSH privées
-git_key
-git_key.pub
-
-# État Terraform (contient mots de passe + IPs)
-*.tfstate
-*.tfstate.backup
-
-# Variables avec mots de passe
-*.tfvars
-*.tfvars.json
-
-# Dossier plugins Terraform
-.terraform/
-
-# Fichiers système Windows
-Thumbs.db
-desktop.ini
-
-formation_key
-formation_key.pub
+FLASK_DEBUG=TRUE
+SECRET_KEY=65161064539865410321
+CLIENT_ID=c37394c5-3ead-4f52-8d85-6689f60f8659
+CLIENT_SECRET=dZo8Q~BVm8_gb_cDav_wcFWbPUQ52y15QJNB7bTa
+SERVER_METADATA_URL=https://login.microsoftonline.com/33a7a298-4cf4-4f62-914a-d32bba54de5a/v2.0/.well-known/openid-configuration
+URL_ZAPIER=https://hooks.zapier.com/hooks/catch/27971848/43l4is5/
