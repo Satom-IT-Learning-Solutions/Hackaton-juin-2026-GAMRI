@@ -18,7 +18,7 @@ L'objectif est de permettre le **provisionnement automatisé de machines virtuel
 
 **Membres**
 
-* Romaun Jaquet
+* Romain Jaquet
 * Ilyess Curschellas
 * Arif Jibril
 * Marcus Molnar
@@ -113,6 +113,69 @@ Cette version est principalement orientée vers l'amélioration visuelle du proj
 * Ajout d'un workflow en phase de test servant à envoyer un mail à la personne qui accepte ou non la demande de VM et un autre pour recevoir le choix de la personne qui accepte ou non la demande
 * Ajout d'un formulaire pour initialiser la demande de VM
 
+## V0.5
+
+* amélioration de l'UX suite aux différents changements (email zapier,...) 
+* connexion entre notre serveur python et plusieurs workflows zapier 
+* envoie d'un email pour la confirmation de la création de la vm 
+* envoie d'un email avec le choix de l'admin
+* changement du contenu des emails envoyés
+
+### Interface/Mails V0.5
+
+*Choix pour la création :*
+<img width="2294" height="1280" alt="image" src="https://github.com/user-attachments/assets/83aa5e5a-58b5-4461-9081-9f041c42ea52" />
+*Création acceptée :*
+<img width="2310" height="1178" alt="image" src="https://github.com/user-attachments/assets/77127586-5f28-473a-ab13-145a9768d7a0" />
+*Création refusée :*
+<img width="2298" height="1172" alt="image" src="https://github.com/user-attachments/assets/32b8d1b4-5e28-4569-b571-b0530b0f22a6" />
+<img width="781" height="418" alt="ezgif com-crop" src="https://github.com/user-attachments/assets/1ca9b383-181d-4171-b788-45c140a8d996" />
+
+*Création d'une nouvelle adresse email pour la réception des demandes de VM*
+<img width="3110" height="1690" alt="image" src="https://github.com/user-attachments/assets/f9a09cf3-0e8b-4915-b6ec-5ed3615199c6" />
+
+## V0.6
+
+* ajout d'un pop up lors de l'envoie de la demande, un lorsque cette demande a été acceptée et un lorsque cette demande a été refusée
+* changement de nom d'expéditeur et du compte gmail qui envoie l'email
+
+### Interface V0.6
+
+*Demande envoyée*
+<img width="3088" height="1690" alt="image" src="https://github.com/user-attachments/assets/32b6e6cb-729a-49f1-868f-42c88d0a0ccc" />
+*Création acceptée*
+<img width="3074" height="1696" alt="image" src="https://github.com/user-attachments/assets/75dc9d3f-4a8f-46d6-9338-eec07a35b7e2" />
+*Création refusée*
+<img width="3092" height="1682" alt="image" src="https://github.com/user-attachments/assets/f2be9487-699a-447e-ba41-057dc84a4397" />
+*Changement du nom de l'expéditeur et de l'email*
+<img width="2808" height="1246" alt="image" src="https://github.com/user-attachments/assets/2b7013bd-9e91-483c-b843-bb0fc44f0313" />
+
+## Workflow Finaux
+
+### Worklow envoie mail de confirmation
+
+<img width="3110" height="1530" alt="image" src="https://github.com/user-attachments/assets/e702b89e-aa1b-46d1-8f9c-ce99af71b50f" />
+Le workflow va recevoir un signal du bouton présent sur le site et va envoyer un mail à la personne qui doit valider ou non la création de la VM
+
+### Workflow décisions et suite des opérations
+
+<img width="3108" height="1532" alt="image" src="https://github.com/user-attachments/assets/55c60848-9d78-430a-a5d1-3acfd08ce242" />
+
+<img width="3108" height="1528" alt="image" src="https://github.com/user-attachments/assets/a2a3656f-e871-4452-9abd-fb10f7bfc011" />
+
+
+Une fois le email reçu, la personne qui décide appuie sur OUI ou NON, si le choix est OUI : on envoie un email de confirmation à l'élève et on envoie les données vers le site web puis Terraform. <br> Puis un node Delay va attendre 6 jours avant d'envoyer un rappel disant que la VM va être détruite le lendemain. <br> Enfin, après un délai de  1 jour suivant le email de mise en garde, un email est envoyé à l'élève pour lui dire que sa VM a été détruite.
+<br> En revanche si le choix est NON : un email est envoyé à l'élève pour l'informer que la VM ne va pas être créée et on envoie les donnes vers le site web pour que ça affiche le message de refus.
+
+### Hébergement du site web 
+
+*onrender.com*
+<img width="3104" height="1700" alt="image" src="https://github.com/user-attachments/assets/599af263-11c2-4554-a6d4-43e1005bc7b6" />
+L'hébergeur est relié à notre repo GitHub, il va prendre les fichiers présents dans le dernier commit et lancer le site web en nous fournissant un lien pour y accéder.
+
+*https://hackaton-provisionningvm-juin-2026.onrender.com*
+
+
 # Technologies utilisées
 
 * Python
@@ -149,6 +212,65 @@ Cette version est principalement orientée vers l'amélioration visuelle du proj
 * Améliorations visuelles supplémentaires.
 * Ajout d'indicateurs de progression et de suivi des opérations.
 
+# Infomaniak Public Cloud
+
+## Description
+
+* Provisionnement automatique de VMs pour les 3 classes GIT (E1 a E3) via Terraform sur Infomaniak Public Cloud (dc3-a — Geneve).
+
+## Prerequis
+
+* Python 3.12 + python-openstackclient
+* Terraform v1.15+
+* Credentials Infomaniak (openrc.txt — fichier local uniquement)
+* Cle SSH git_key (locale — jamais sur GitHub)
+
+## Structure
+
+* main.tf -> Configuration provider OpenStack
+* variables.tf -> Variables Terraform
+* vm-test.tf -> VM de test classe E1
+
+## Utilisation
+
+1. Configurer les variables d'environnement OS_
+2. terraform init
+3. terraform plan
+4. terraform apply -auto-approve
+
+## Destruction VMs
+
+* terraform destroy -auto-approve
+
+## Base de données des cours
+
+* Structuration et attribution des modules pour lier dynamiquement les environnements Cloud aux cours des différentes classes.
+
+<img width="1477" height="752" alt="Capture d&#39;écran 2026-06-15 154113" src="https://github.com/user-attachments/assets/b1860bb2-1608-483c-a16d-4336f0b6fa1e" />
+<img width="948" height="1033" alt="Capture d&#39;écran 2026-06-17 150708" src="https://github.com/user-attachments/assets/0741a141-8e6d-49e8-90b9-7a6590d1d2c3" />
+
+### Classe E1
+* Concepts de base à la virtualisation
+* Linux : Principes de base (LPI101) Partie 1
+* Linux : Principes de base (LPI101) Partie 2
+
+### Classe E2
+* Sécurité des Réseaux Informatiques Commun (TIIS 2)
+* Powershell Commun (TIIS 2)
+* Linux - Administration (LPIC2)
+
+### Classe E3
+* Docker Commun (B3 RPI D)
+* Cloud Computing - Openstack
+* Cybersecurity opérations
+
+<img width="1020" height="363" alt="image" src="https://github.com/user-attachments/assets/0ebcd4bb-a5e1-4182-9a16-ef5999c6c590" />
+
+## Equipe Réseaux
+
+* Arif Jibril
+* Ilyess Curschellas
+* Gabryel Dwarka
 
 # État du projet
 
