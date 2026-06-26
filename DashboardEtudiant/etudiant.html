@@ -1,112 +1,253 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GIT Cloud — Espace Étudiant</title>
-    <link rel="stylesheet" href="../DashboardEtudiant/style_etudiant.css">
-</head>
-<body>
-
+    <link rel="stylesheet" href="../DashboardEtudiant/style_etudiant.css" />
+  </head>
+  <body>
     <aside class="sidebar">
-        <div class="sidebar-top">
-            <a href="/" class="brand">
-                <img src="/images/Logo.png" alt="GIT Cloud">
-                <span>GIT CLOUD</span>
-            </a>
-            <nav class="menu">
-                <a href="#" class="menu-item active" data-section="dashboard">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
-                    Mon Dashboard
-                </a>
-                <a href="#" class="menu-item" data-section="nouvelle-vm">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="16"/><line x1="8" y1="12" x2="16" y2="12"/></svg>
-                    Nouvelle VM
-                </a>
-            </nav>
+      <div class="sidebar-top">
+        <a href="/" class="brand">
+          <img src="/images/Logo.png" alt="GIT Cloud" />
+          <span>GIT CLOUD</span>
+        </a>
+        <nav class="menu">
+          <a href="#" class="menu-item active" data-section="dashboard">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <rect x="3" y="3" width="7" height="7" />
+              <rect x="14" y="3" width="7" height="7" />
+              <rect x="3" y="14" width="7" height="7" />
+              <rect x="14" y="14" width="7" height="7" />
+            </svg>
+            Mon Dashboard
+          </a>
+          <a href="#" class="menu-item" data-section="nouvelle-vm">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="8" x2="12" y2="16" />
+              <line x1="8" y1="12" x2="16" y2="12" />
+            </svg>
+            Nouvelle VM
+          </a>
+        </nav>
+      </div>
+
+      <div class="user-profile">
+        <div class="user-avatar">{{ nom[0] if nom else 'E' }}</div>
+        <div class="user-info">
+          <div class="user-name">{{ nom if nom else 'Visiteur' }}</div>
+          <div class="user-role">Étudiant</div>
         </div>
-        <div class="user-profile">
-            <div class="user-avatar">{{ nom[0] if nom else 'E' }}</div>
-            <div class="user-info">
-                <div class="user-name">{{ nom }}</div>
-                <div class="user-role">Étudiant</div>
-            </div>
-            <a href="/logout" class="logout-btn" title="Déconnexion">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-            </a>
-        </div>
+        <a href="/logout" class="logout-btn" title="Déconnexion">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+        </a>
+      </div>
     </aside>
 
     <main class="main-content">
+      <section id="section-dashboard" class="page-section active">
+        <header class="page-header">
+          <div>
+            <h1>Vos Ressources Cloud</h1>
+            <p>Suivi en temps réel de vos instances actives</p>
+          </div>
+        </header>
 
-        <section id="section-dashboard" class="page-section active">
-            <header class="page-header">
-                <div>
-                    <h1>Vos Ressources Cloud</h1>
-                    <p>Suivi en temps réel de vos instances actives</p>
-                </div>
-            </header>
+        <div class="stats-row">
+          <div class="stat-card accent-blue">
+            <div class="stat-value" id="count-vms">0</div>
+            <div class="stat-label">Machine active</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="total-ram">0 Go</div>
+            <div class="stat-label">RAM Allouée</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="total-storage">0 Go</div>
+            <div class="stat-label">Stockage NVMe</div>
+          </div>
+        </div>
 
-            <div class="stats-row">
-                <div class="stat-card accent-blue">
-                    <div class="stat-value" id="count-vms">0</div>
-                    <div class="stat-label">Machine active</div>
+        <div class="section-title">Vos Instances Virtuelles</div>
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Nom Machine</th>
+                <th>Template</th>
+                <th>Adresse IP</th>
+                <th>Statut</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-my-vms">
+              <tr>
+                <td colspan="5" class="empty-row">
+                  Interrogation du cluster en cours...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="section-nouvelle-vm" class="page-section">
+        <header class="page-header">
+          <div>
+            <h1>Déploiement d'infrastructure</h1>
+            <p>Formulaire de demande d'accès et de provisionnement</p>
+          </div>
+        </header>
+
+        <div id="form-block">
+          <div class="form-grid">
+            <div class="form-col">
+              <div class="form-card">
+                <div class="form-card-title">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    style="stroke: #ffffff"
+                    width="16"
+                    height="16"
+                  >
+                    <path
+                      d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
+                    />
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                    <line x1="12" y1="22.08" x2="12" y2="12" />
+                  </svg>
+                  Demande de VM
                 </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="total-ram">0 Go</div>
-                    <div class="stat-label">RAM Allouée</div>
+
+                <div class="field">
+                  <label for="Cours">Cours</label>
+                  <div
+                    class="custom-select-container user-{{ classe if classe else 'demo' }}"
+                  >
+                    <div class="select-trigger" id="select-trigger">
+                      <span>Sélectionne un cours...</span>
+                    </div>
+                    <div class="custom-options" id="custom-options">
+                      <div class="choix e1" data-value="1">
+                        Concept de base de la virtualisation
+                      </div>
+                      <div class="choix e1" data-value="2">
+                        Linux : Principe de base (LPI101) Partie 1
+                      </div>
+                      <div class="choix e1" data-value="3">
+                        Linux : Principe de base (LPI101) Partie 2
+                      </div>
+
+                      <div class="choix e2" data-value="4">
+                        Sécurité des Réseaux Informatiques Commun (TIIS 2)
+                      </div>
+                      <div class="choix e2" data-value="5">
+                        Powershell Commun (TIIS 2)
+                      </div>
+                      <div class="choix e2" data-value="6">
+                        Linux - Administration (LPIC2)
+                      </div>
+
+                      <div class="choix e3" data-value="7">
+                        Docker Commun (B3 RPI D)
+                      </div>
+                      <div class="choix e3" data-value="8">
+                        Cloud Computing - Openstack
+                      </div>
+                      <div class="choix e3" data-value="9">
+                        Cybersecurity operations
+                      </div>
+                    </div>
+                    <input
+                      type="hidden"
+                      name="cours"
+                      id="cours-value"
+                      value=""
+                    />
+                  </div>
                 </div>
-                <div class="stat-card">
-                    <div class="stat-value" id="total-storage">0 Go</div>
-                    <div class="stat-label">Stockage NVMe</div>
+
+                <div class="field">
+                  <label for="nomVM">Nom de la VM</label>
+                  <input type="text" id="nomVM" placeholder="Ex: DC01" />
                 </div>
+              </div>
             </div>
 
-            <div class="section-title">Vos Instances Virtuelles</div>
-            <div class="table-container">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Nom Machine</th>
-                            <th>Template</th>
-                            <th>Adresse IP</th>
-                            <th>Statut</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tbody-my-vms">
-                        <tr><td colspan="5" class="empty-row">Interrogation du cluster en cours...</td></tr>
-                    </tbody>
-                </table>
+            <div class="form-col">
+              <div
+                class="resources-preview"
+                id="resources-preview"
+                style="display: none"
+              >
+                <div class="form-card-title">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    width="16"
+                    height="16"
+                  >
+                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                    <line x1="8" y1="21" x2="16" y2="21" />
+                    <line x1="12" y1="17" x2="12" y2="21" />
+                  </svg>
+                  Ressources attribuées automatiquement
+                </div>
+                <div class="stats-row" id="preview-stats"></div>
+              </div>
             </div>
-        </section>
+          </div>
+        </div>
+        <button id="mon-bouton-validation" data-nom="{{ nom }}" data-classe="{{ classe }}" data-email="{{ email }}">Valider l'action</button>  
+        </div>
+        <div class="templates-grid" id="templates-container"></div>
 
-        <section id="section-nouvelle-vm" class="page-section">
-            <header class="page-header">
-                <div>
-                    <h1>Déploiement d'infrastructure</h1>
-                    <p>Sélectionnez un gabarit pour instancier votre VM</p>
-                </div>
-            </header>
+        <div class="deploy-action-box" id="deploy-box" style="display: none">
+          <div class="selected-summary">
+            <span>Gabarit sélectionné :</span>
+            <strong id="selected-tmpl-name">—</strong>
+          </div>
+          <button class="btn-deploy" id="btn-trigger-deploy">
+            Lancer le provisionnement Terraform
+          </button>
+        </div>
 
-            <div class="templates-grid" id="templates-container">
-                <button id="mon-bouton-validation">Valider l'action</button>
-                </div>
-
-            <div class="deploy-action-box" id="deploy-box" style="display: none;">
-                <div class="selected-summary">
-                    <span>Gabarit sélectionné :</span>
-                    <strong id="selected-tmpl-name">—</strong>
-                </div>
-                <button class="btn-deploy" id="btn-trigger-deploy">
-                    Lancer le provisionnement Terraform
-                </button>
-            </div>
-            <div id="deploy-message" class="form-message" style="display: none;"></div>
-        </section>
-
+        <div
+          id="deploy-message"
+          class="form-message"
+          style="display: none"
+        ></div>
+      </section>
     </main>
 
+
     <script src="../DashboardEtudiant/script_etudiant.js"></script>
-</body>
+  </body>
 </html>
