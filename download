@@ -1,0 +1,25 @@
+﻿# ================================
+# FICHIERS SECRETS — JAMAIS SUR GITHUB
+# ================================
+
+# Clés SSH privées
+git_key
+git_key.pub
+
+# État Terraform (contient mots de passe + IPs)
+*.tfstate
+*.tfstate.backup
+
+# Variables avec mots de passe
+*.tfvars
+*.tfvars.json
+
+# Dossier plugins Terraform
+.terraform/
+
+# Fichiers système Windows
+Thumbs.db
+desktop.ini
+
+formation_key
+formation_key.pub
