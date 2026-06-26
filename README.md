@@ -246,8 +246,9 @@ L'hébergeur est relié à notre repo GitHub, il va prendre les fichiers présen
 
 * Structuration et attribution des modules pour lier dynamiquement les environnements Cloud aux cours des différentes classes.
 
-<img width="1477" height="752" alt="Capture d&#39;écran 2026-06-15 154113" src="https://github.com/user-attachments/assets/b1860bb2-1608-483c-a16d-4336f0b6fa1e" />
-<img width="948" height="1033" alt="Capture d&#39;écran 2026-06-17 150708" src="https://github.com/user-attachments/assets/0741a141-8e6d-49e8-90b9-7a6590d1d2c3" />
+<img width="797" height="212" alt="image" src="https://github.com/user-attachments/assets/3eb56d59-9bda-4732-bc3f-3f74d453e227" />
+<img width="717" height="261" alt="image" src="https://github.com/user-attachments/assets/ec931333-847c-4072-8fdd-3465ccac6bd1" />
+<img width="802" height="996" alt="image" src="https://github.com/user-attachments/assets/f758a975-bf10-4ac0-94b6-35cbaf58ccea" />
 
 ### Classe E1
 * Concepts de base à la virtualisation
@@ -265,6 +266,14 @@ L'hébergeur est relié à notre repo GitHub, il va prendre les fichiers présen
 * Cybersecurity opérations
 
 <img width="1020" height="363" alt="image" src="https://github.com/user-attachments/assets/0ebcd4bb-a5e1-4182-9a16-ef5999c6c590" />
+
+### Supervision (Grafana & Prometheus)
+
+* Monitoring en temps reel des ressources des VMs provisionnees avec Node Exporter.
+* Tableaux de bord de suivi complets connectes a la source de donnees Prometheus (utilisation CPU, RAM, Disque, Reseau).
+* Supervision active de la VM de test de la classe E1 (nœud : git-e1-test-01).
+
+<img width="1917" height="988" alt="Capture d&#39;écran 2026-06-26 084243" src="https://github.com/user-attachments/assets/295857cf-b210-4375-a830-e348e3b997cf" />
 
 ## Equipe Réseaux
 
