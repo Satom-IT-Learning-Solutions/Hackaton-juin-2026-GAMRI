@@ -1,114 +1,326 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GIT Cloud — Espace Formateur</title>
-    <link rel="stylesheet" href="style_formateur.css">
-</head>
-<body>
-
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GIT Cloud Espace Formateur</title>
+    <link rel="stylesheet" href="../DashboardFormateur/style_formateur.css" />
+  </head>
+  <body>
     <aside class="sidebar">
-        <div class="sidebar-top">
-            <a href="/" class="brand">
-                <img src="/images/Logo.png" alt="GIT Cloud">
-                <span>GIT CLOUD</span>
-            </a>
-            <nav class="menu">
-                <a href="#" class="menu-item active" data-section="validations">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                    Validations VM
-                </a>
-                <a href="#" class="menu-item" data-section="demandes-groupes">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                    Demande Groupée
-                </a>
-            </nav>
+      <div class="sidebar-top">
+        <a href="/" class="brand">
+          <img src="/images/Logo.png" alt="GIT Cloud" />
+          <span>GIT CLOUD</span>
+        </a>
+        <nav class="menu">
+          <a href="#" class="menu-item active" data-section="dashboard">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <rect x="3" y="3" width="7" height="7" />
+              <rect x="14" y="3" width="7" height="7" />
+              <rect x="3" y="14" width="7" height="7" />
+              <rect x="14" y="14" width="7" height="7" />
+            </svg>
+            Mon Dashboard
+          </a>
+          <a href="#" class="menu-item" data-section="nouvelle-vm">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="8" x2="12" y2="16" />
+              <line x1="8" y1="12" x2="16" y2="12" />
+            </svg>
+            Nouvelle VM
+          </a>
+        </nav>
+      </div>
+
+      <div class="user-profile">
+        <div class="user-avatar">{{ nom[0] if nom else 'E' }}</div>
+        <div class="user-info">
+          <div class="user-name">{{ nom if nom else 'Visiteur' }}</div>
+          <div class="user-role">Formateur</div>
         </div>
-        <div class="user-profile">
-            <div class="user-avatar">{{ nom[0] if nom else 'F' }}</div>
-            <div class="user-info">
-                <div class="user-name">{{ nom }}</div>
-                <div class="user-role">Formateur</div>
-            </div>
-            <a href="/logout" class="logout-btn" title="Déconnexion">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
-            </a>
-        </div>
+        <a href="/logout" class="logout-btn" title="Déconnexion">
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+            <polyline points="16 17 21 12 16 7" />
+            <line x1="21" y1="12" x2="9" y2="12" />
+          </svg>
+        </a>
+      </div>
     </aside>
 
     <main class="main-content">
+      <section id="section-dashboard" class="page-section active">
+        <header class="page-header">
+          <div>
+            <h1>Vos Ressources Cloud</h1>
+            <p>Suivi en temps réel de vos instances actives</p>
+          </div>
+        </header>
 
-        <section id="section-validations" class="page-section active">
-            <header class="page-header">
-                <div>
-                    <h1>Flux d'approbations</h1>
-                    <p>Validez ou rejetez les demandes de ressources des étudiants</p>
+        <div class="stats-row">
+          <div class="stat-card accent-blue">
+            <div class="stat-value" id="count-vms">0</div>
+            <div class="stat-label">Machine active</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="total-ram">0 Go</div>
+            <div class="stat-label">RAM Allouée</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-value" id="total-storage">0 Go</div>
+            <div class="stat-label">Stockage NVMe</div>
+          </div>
+        </div>
+
+        <div class="section-title">Vos Instances Virtuelles</div>
+        <div class="table-container">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Nom Machine</th>
+                <th>Template</th>
+                <th>Adresse IP</th>
+                <th>Statut</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="tbody-my-vms">
+              <tr>
+                <td colspan="5" class="empty-row">
+                  Interrogation du cluster en cours...
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="section-nouvelle-vm" class="page-section">
+        <header class="page-header">
+          <div>
+            <h1>Déploiement d'infrastructure</h1>
+            <p>Formulaire de demande d'accès et de provisionnement</p>
+          </div>
+        </header>
+
+        <div id="form-block">
+          <div class="form-grid">
+            <div class="form-col">
+              <div class="form-card">
+                <div class="form-card-title">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    style="stroke: #ffffff"
+                    width="16"
+                    height="16"
+                  >
+                    <path
+                      d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"
+                    />
+                    <polyline points="3.27 6.96 12 12.01 20.73 6.96" />
+                    <line x1="12" y1="22.08" x2="12" y2="12" />
+                  </svg>
+                  Demande de VM
                 </div>
-            </header>
 
-            <div class="section-title">Requêtes en attente de traitement</div>
-            <div class="table-container">
-                <table class="data-table">
-                    <thead>
-                        <tr>
-                            <th>Étudiant</th>
-                            <th>Template Requis</th>
-                            <th>Justification / Cours</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody id="tbody-pending">
-                        <tr><td colspan="4" class="empty-row">Aucun flux en attente de signature.</td></tr>
-                    </tbody>
-                </table>
-            </div>
-        </section>
+                <div class="form-group-custom">
+                  <span class="form-label-custom">Classe</span>
+                  <div class="radio-exclusive-group">
+                    <label class="radio-item" for="classe-e1">
+                      <input
+                        type="radio"
+                        id="classe-e1"
+                        name="classe"
+                        class="radio-input"
+                        value="E1"
+                      />
+                      <span class="radio-text">E1</span>
+                    </label>
+                    <label class="radio-item" for="classe-e2">
+                      <input
+                        type="radio"
+                        id="classe-e2"
+                        name="classe"
+                        class="radio-input"
+                        value="E2"
+                      />
+                      <span class="radio-text">E2</span>
+                    </label>
+                    <label class="radio-item" for="classe-e3">
+                      <input
+                        type="radio"
+                        id="classe-e3"
+                        name="classe"
+                        class="radio-input"
+                        value="E3"
+                      />
+                      <span class="radio-text">E3</span>
+                    </label>
+                  </div>
 
-        <section id="section-demandes-groupes" class="page-section">
-            <header class="page-header">
-                <div>
-                    <h1>Batch Provisioning</h1>
-                    <p>Générez un quota d'instances massif pour un TP ou un examen spécifique</p>
-                </div>
-            </header>
-
-            <div class="form-grid">
-                <div class="form-group">
-                    <label>Gabarit d'infrastructure</label>
-                    <div class="templates-compact-grid" id="compact-templates">
+                  <div class="field" style="margin-top: 0.5rem">
+                    <label for="Cours">Cours</label>
+                    <div
+                      class="custom-select-container user-{{ classe if classe else 'demo' }}"
+                    >
+                      <div class="select-trigger" id="select-trigger">
+                        <span>Sélectionne un cours...</span>
+                        <svg
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          width="14"
+                          height="14"
+                        >
+                          <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                      </div>
+                      <div class="custom-options" id="custom-options">
+                        <div class="choix e1" data-value="1">
+                          Concept de base de la virtualisation
                         </div>
-                </div>
+                        <div class="choix e1" data-value="2">
+                          Linux Principe de base (LPI101) Partie 1
+                        </div>
+                        <div class="choix e1" data-value="3">
+                          Linux Principe de base (LPI101) Partie 2
+                        </div>
+                        <div class="choix e2" data-value="4">
+                          Sécurité des Réseaux Informatiques Commun (TIIS 2)
+                        </div>
+                        <div class="choix e2" data-value="5">
+                          Powershell Commun (TIIS 2)
+                        </div>
+                        <div class="choix e2" data-value="6">
+                          Linux Administration (LPIC2)
+                        </div>
+                        <div class="choix e3" data-value="7">
+                          Docker Commun (B3 RPI D)
+                        </div>
+                        <div class="choix e3" data-value="8">
+                          Cloud Computing Openstack
+                        </div>
+                        <div class="choix e3" data-value="9">
+                          Cybersecurity operations
+                        </div>
+                      </div>
+                      <input
+                        type="hidden"
+                        name="cours"
+                        id="cours-value"
+                        value="required"
+                      />
+                    </div>
+                  </div>
 
-                <div class="form-inputs-row">
-                    <div class="form-group">
-                        <label for="g-nb">Nombre d'instances à générer</label>
-                        <input type="number" id="g-nb" min="1" max="30" placeholder="Ex: 15" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="g-cours">Identifiant du cours / Module</label>
-                        <input type="text" id="g-cours" placeholder="Ex: TP-ADMIN-SERVER" required>
-                    </div>
-                </div>
+                  <label for="nb-eleves" class="form-label-custom"
+                    >Nb. élèves</label
+                  >
+                  <input
+                    type="number"
+                    id="nb-eleves"
+                    class="form-input-custom"
+                    placeholder="Ex: 22"
+                    min="1"
+                  />
+                   <div class="date-container">
+  <div class="date-group">
+    <label for="debut" class="form-label-custom">Date-Début</label>
+    <input
+      type="date"
+      id="debut"
+      class="form-input-custom"
+      required
+    />
+  </div>
 
-                <div class="form-inputs-row">
-                    <div class="form-group">
-                        <label for="g-debut">Date d'activation</label>
-                        <input type="datetime-local" id="g-debut" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="g-fin">Date de destruction automatique</label>
-                        <input type="datetime-local" id="g-fin" required>
-                    </div>
+  <div class="date-group">
+    <label for="fin" class="form-label-custom">Date-Fin</label>
+    <input
+      type="date"
+      id="fin"
+      class="form-input-custom"
+      required
+    />
+  </div>
+</div>
                 </div>
-
-                <button class="btn-submit-group" id="btn-groupe" disabled>Valider la demande groupée</button>
-                <div id="g-message" class="form-message" style="display: none;"></div>
+              </div>
             </div>
-        </section>
 
+            <div class="form-col">
+              <div
+                class="resources-preview"
+                id="resources-preview"
+                style="display: none"
+              >
+                <div class="form-card-title">
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    width="16"
+                    height="16"
+                  >
+                    <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                    <line x1="8" y1="21" x2="16" y2="21" />
+                    <line x1="12" y1="17" x2="12" y2="21" />
+                  </svg>
+                  Ressources attribuées automatiquement
+                </div>
+                <div class="stats-row" id="preview-stats"></div>
+              </div>
+            </div>
+          </div>
+
+          <button
+            id="mon-bouton-validation"
+            class="btn-submit-group"
+            data-nom="{{ nom }}"
+            data-classe="{{ classe }}"
+          >
+            Valider l'action
+          </button>
+        </div>
+
+        <div class="templates-grid" id="templates-container"></div>
+
+        <div class="deploy-action-box" id="deploy-box" style="display: none">
+          <div class="selected-summary">
+            <span>Gabarit sélectionné :</span>
+            <strong id="selected-tmpl-name">—</strong>
+          </div>
+          <button class="btn-deploy" id="btn-trigger-deploy">
+            Lancer le provisionnement Terraform
+          </button>
+        </div>
+        <div id="deploy-message" class="form-message"></div>
+      </section>
     </main>
 
-    <script src="script_formateur.js"></script>
-</body>
+    <script src="../DashboardFormateur/script_formateur.js"></script>
+  </body>
 </html>
