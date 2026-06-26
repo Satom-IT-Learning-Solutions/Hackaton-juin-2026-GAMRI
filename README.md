@@ -225,22 +225,202 @@ L'hébergeur est relié à notre repo GitHub, il va prendre les fichiers présen
 * Credentials Infomaniak (openrc.txt — fichier local uniquement)
 * Cle SSH git_key (locale — jamais sur GitHub)
 
-## Structure
+Le déploiement inclut la configuration réseau, les règles de sécurité (Firewall) ainsi qu'un provisionnement automatisé (**Cloud-Init**) pour configurer les accès utilisateurs et les privilèges root.
 
-* main.tf -> Configuration provider OpenStack
-* variables.tf -> Variables Terraform
-* vm-test.tf -> VM de test classe E1
+## 🚀 Fonctionnalités incluses
 
-## Utilisation
+* **Gestion des clés SSH :** Génération et injection automatisée de clés Ed25519.
+* **Sécurité automatisée :** Création d'un groupe de sécurité autorisant le trafic SSH (port 22) et les diagnostics réseau (ICMP/Ping).
+* **Provisionnement Cloud-Init :**
+    * Création de l'utilisateur par défaut `ubuntu`.
+    * Configuration du mot de passe global : `formation`.
+    * Activation de l'authentification SSH par mot de passe.
+    * Autorisation et configuration des accès root/sudo.
 
-1. Configurer les variables d'environnement OS_
-2. terraform init
-3. terraform plan
-4. terraform apply -auto-approve
+---
 
-## Destruction VMs
+## 🛠️ Prérequis & Installation
 
-* terraform destroy -auto-approve
+### 1. Structure du projet local
+Assurez-vous de travailler dans le répertoire dédié sur votre machine Windows :
+```powershell
+C:\git-lab-cloud\
+├── vm-test.tf          # Fichier de configuration Terraform
+├── formation_key       # Clé privée SSH (générée localement)
+└── formation_key.pub   # Clé publique SSH
+
+```
+<img width="1918" height="1078" alt="image" src="https://github.com/user-attachments/assets/62849f3d-5e51-40bf-af76-532fbbdf0e95" />
+
+
+### 2. Configuration des variables d'environnement (OpenStack OpenRC)
+
+Avant d'exécuter Terraform, vous devez injecter vos identifiants d'API OpenStack dans votre terminal PowerShell (à renouveler à chaque ouverture de session) :
+
+```powershell
+$env:OS_AUTH_URL="[https://auth.cloud.ovh.net/v3](https://auth.cloud.ovh.net/v3)" # À adapter selon le fournisseur
+$env:OS_PROJECT_ID="[ID du projet]"
+$env:OS_PROJECT_NAME="[nom du projet]"
+$env:OS_USERNAME="[nom de l'utilisateur]"
+$env:OS_PASSWORD="VOTRE_MOT_DE_PASSE_UTILISATEUR_OPENSTACK"
+$env:OS_REGION_NAME="dc4-a"
+$env:OS_IDENTITY_API_VERSION="3"
+
+```
+<img width="1847" height="872" alt="image" src="https://github.com/user-attachments/assets/0faa24b0-f72a-4a9a-aa55-c2e3caf68eb1" />
+
+### 3. Génération de la paire de clés SSH
+
+Pour générer les clés de connexion compatibles directement depuis Windows via PowerShell :
+
+```powershell
+ssh-keygen -t ed25519 -f C:\git-lab-cloud\formation_key -C "git-lab-cloud"
+
+```
+
+*(Laissez la "passphrase" vide en appuyant deux fois sur Entrée pour faciliter l'automatisation).*
+
+---
+
+## 📄 Code de Configuration `vm-test.tf`
+
+Voici le descripteur d'infrastructure complet à appliquer :
+
+```hcl
+# Clé SSH — injectée dans chaque VM à la création
+resource "openstack_compute_keypair_v2" "git_keypair" {
+  name       = "git-lab-cloud-key"
+  public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPozB0lBd0n/QEc7kJPNVqufy4UahL4xsKFBNL0QOpz/ git-lab-cloud" # À remplacer par le contenu de votre formation_key.pub
+}
+
+# Security Group — pare-feu de la VM
+resource "openstack_networking_secgroup_v2" "git_sg" {
+  name        = "git-ssh-access"
+  description = "Autorise SSH port 22 et ICMP"
+}
+
+# Règle SSH — port 22 depuis Internet
+resource "openstack_networking_secgroup_rule_v2" "ssh_rule" {
+  direction         = "ingress"
+  ethertype         = "IPv4"
+  protocol          = "tcp"
+  port_range_min    = 22
+  port_range_max    = 22
+  remote_ip_prefix  = "0.0.0.0/0"
+  security_group_id = openstack_networking_secgroup_v2.git_sg.id
+}
+
+# Règle ICMP — autorise le ping
+resource "openstack_networking_secgroup_rule_v2" "icmp_rule" {
+  direction         = "ingress"
+  ethertype         = "IPv4"
+  protocol          = "icmp"
+  remote_ip_prefix  = "0.0.0.0/0"
+  security_group_id = openstack_networking_secgroup_v2.git_sg.id
+}
+
+# Instance VM Ubuntu 22.04
+resource "openstack_compute_instance_v2" "vm_test_e1" {
+  name            = "git-e1-test-01"
+  flavor_name     = "a1-ram2-disk20-perf1"
+  image_id        = "1cb0a6a2-2dc2-46cd-bb23-1070d7f0e9d6"
+  key_pair        = openstack_compute_keypair_v2.git_keypair.name
+  security_groups = [openstack_networking_secgroup_v2.git_sg.name]
+
+  network {
+    name = "ext-net1"
+  }
+
+  metadata = {
+    classe = "E1"
+    module = "test"
+    projet = "GIT-LAB-CLOUD"
+  }
+
+  # Script Cloud-Init pour la post-configuration des accès
+  user_data = <<-EOF
+    #cloud-config
+    password: formation
+    chpasswd: { expire: False }
+    ssh_pwauth: True
+    users:
+      - name: ubuntu
+        passwd: "$6$rounds=4096$formation$ZlS7GzEqG32mCExX2h.8q1lG86GgO3P78jUExfK7oG8l4g7L9VExH4G8kQ1lG86GgO3P78jUExfK7oG8l4g7L9VExH."
+        sudo: ['ALL=(ALL) NOPASSWD:ALL']
+        shell: /bin/bash
+        ssh_authorized_keys:
+          - "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPozB0lBd0n/QEc7kJPNVqufy4UahL4xsKFBNL0QOpz/ git-lab-cloud"
+    runcmd:
+      - sed -i 's/^#\?PermitRootLogin.*/PermitRootLogin yes/' /etc/ssh/sshd_config
+      - sed -i 's/^#\?PasswordAuthentication.*/PasswordAuthentication yes/' /etc/ssh/sshd_config
+      - echo "root:formation" | chpasswd
+      - systemctl restart sshd
+  EOF
+}
+
+# Output pour récupérer dynamiquement l'IP de la machine
+output "vm_ip" {
+  value = openstack_compute_instance_v2.vm_test_e1.access_ip_v4
+}
+
+```
+
+---
+
+## 💻 Commandes d'Exploitation
+
+Exécutez ces commandes dans l'ordre au sein de votre terminal PowerShell :
+
+### 1. Initialiser l'environnement (Téléchargement des providers)
+
+```powershell
+terraform init
+
+```
+
+### 2. Visualiser les changements planifiés
+
+```powershell
+terraform plan
+
+```
+
+### 3. Appliquer et déployer l'infrastructure (Sans confirmation manuelle)
+
+```powershell
+terraform apply -auto-approve
+
+```
+
+### 4. Forcer la recréation complète de la VM (En cas de problème d'accès SSH)
+
+```powershell
+terraform apply -replace="openstack_compute_instance_v2.vm_test_e1"
+
+```
+<img width="1313" height="872" alt="image" src="https://github.com/user-attachments/assets/b7b965c8-6f43-4b88-8aac-a55e3e4a3184" />
+
+---
+
+## 🔌 Connexion SSH via MobaXterm
+
+Pour vous connecter à l'instance configurée :
+
+1. **Basic SSH Settings :**
+* **Remote Host :** Utilisez l'adresse IP retournée par l'output `vm_ip` de Terraform.
+* **Username :** `ubuntu`
+
+
+2. **Advanced SSH Settings :**
+* Cochez **Use private key** et pointez vers votre clé privée : `C:\git-lab-cloud\formation_key`.
+
+
+3. **Élévation Privilèges Root :** Une fois connecté, le mot de passe configuré est `formation`. Pour basculer en root :
+```bash
+sudo su -
+
+```
+<img width="1116" height="717" alt="image" src="https://github.com/user-attachments/assets/3e434a42-42e7-4a27-b7ef-8bf4df93bb9f" />
 
 ## Base de données des cours
 
